@@ -48,7 +48,6 @@ function Demo() {
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
-
         </MapContainer>
       </div>
    </div>  
