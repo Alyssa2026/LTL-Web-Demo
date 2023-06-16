@@ -42,15 +42,6 @@ body {
     color: #61dafb;
   }
   
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
   .spacer {
     margin-left: .5rem; /* 4px */
   }

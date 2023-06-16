@@ -1,0 +1,30 @@
+.centered-text {
+    text-align: center;
+    color: white;
+  }
+
+  .home-page {
+    background-image: url("./img/HomePic.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .content {
+    margin-left: 4.0in;
+    margin-bottom: 1.6in;
+  }
+  
+  .title {
+    color: white;
+  }
+  
+  .demo-link {
+    margin-left: 210px;
+    color: white;
+  }
+  

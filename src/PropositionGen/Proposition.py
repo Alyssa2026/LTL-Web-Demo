@@ -1,16 +1,17 @@
-import os
-from string import digits
-'dog12'
 import xml.etree.ElementTree as ET
 import re
+from string import digits
+import requests
 
-# os.system('wget https://api.openstreetmap.org/api/0.6/map?bbox=11.54,48.14,11.543,48.145')
+# Load the OSM file--> initial method of already downloaded file
+# tree = ET.parse('PropositionGen/prov.osm')
+# root = tree.getroot()
 
-
-# Load the OSM file
-tree = ET.parse('prov.osm')
-root = tree.getroot()
-
+# Parse file using link directly--> potentially easier for when implementing web demo
+url = 'https://api.openstreetmap.org/api/0.6/map?bbox=11.54,48.14,11.543,48.145'
+response = requests.get(url)
+osm_content = response.text
+root = ET.fromstring(osm_content)
 # Define a dictionary to store the extracted names (set to avoid repeats)
 names = {}
 
