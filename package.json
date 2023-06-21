@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "jquery": "^3.7.0",
     "leaflet": "^1.9.4",
+    "pyodide": "^0.23.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
@@ -19,6 +20,8 @@
     "react-navigation": "^4.4.4",
     "react-router-dom": "^6.12.1",
     "react-scripts": "^5.0.1",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -33,6 +36,7 @@
       "react-app/jest"
     ]
   },
+  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",

@@ -1,47 +1,45 @@
 import './DemoPage.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useState } from 'react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
-import genProp from './PropositionGen/Proposition.py'
-import $ from 'jquery'; // Import jQuery library
+
 
 // Screen where the demo will be hosted
 function Demo() {
+  // Calling OSM API
   const [center, setCenter] = useState({lat: 41.8268, lng: -71.4025})
   const ZOOM_LEVEL = 16;
   const mapRef = useRef()
   const url =  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-  
   // When clicked, this will get the bounds, parse and filter the location selected
-  function clickMe(){
-    if (mapRef.current) {
-      // Get Bounds
-      const map = mapRef.current;
-      const bounds = map.getBounds();
-      const minLat = bounds.getSouth();
-      const maxLat = bounds.getNorth();
-      const minLng = bounds.getWest();
-      const maxLng = bounds.getEast();
-      // reate URL
-      const osmUrl = `https://api.openstreetmap.org/api/0.6/map?bbox=${minLng},${minLat},${maxLng},${maxLat}`;
-      // function to get genProp and processes the URL
-      console.log('hello')
-      $.ajax({
-        url: 'Proposition.py', // Replace with the appropriate endpoint on your server
-        type: 'text',
-        data: { url: osmUrl },
-        success: function (response) {
-          // Handle the response from the server
-          console.log(response);
-        },
-        error: function (error) {
-          console.error('Error:', error);
-        },
-      });
-    }
-  }
+  const clickMe =async ()=>{
+  if (mapRef.current) {
+    // Get Bounds
+    const map = mapRef.current;
+    const bounds = map.getBounds();
+    const minLat = Number(bounds.getSouth().toFixed(2));
+    const maxLat = Number(bounds.getNorth().toFixed(2));
+    const minLng = Number(bounds.getWest().toFixed(2));
+    const maxLng = Number(bounds.getEast().toFixed(2));
 
+    // Call Flask server to call genProp
+    const coord = {minLat, maxLat, minLng, maxLng};
+   
+    const response = await fetch("/genProp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(coord)
+    });
+    if (response.ok) {
+      console.log("response worked!");
+      
+    }
+      
+  }
+}
 // Implementing API/Logos
   return (
     <div className="backround-color" >
@@ -76,4 +74,5 @@ function Demo() {
    </div>  
   );
 }
+
 export default Demo;
