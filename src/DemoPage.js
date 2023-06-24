@@ -1,8 +1,8 @@
 import './DemoPage.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { useState } from 'react';
-import { useRef, useEffect } from 'react';
+import { useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
+import axios from 'axios'
 
 
 // Screen where the demo will be hosted
@@ -13,31 +13,30 @@ function Demo() {
   const mapRef = useRef()
   const url =  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
   // When clicked, this will get the bounds, parse and filter the location selected
+  const [response, setResponse] = useState(''); // State varia
   const clickMe =async ()=>{
   if (mapRef.current) {
-    // Get Bounds
-    const map = mapRef.current;
-    const bounds = map.getBounds();
-    const minLat = Number(bounds.getSouth().toFixed(2));
-    const maxLat = Number(bounds.getNorth().toFixed(2));
-    const minLng = Number(bounds.getWest().toFixed(2));
-    const maxLng = Number(bounds.getEast().toFixed(2));
+      // Get Bounds
+      const map = mapRef.current;
+      const bounds = map.getBounds();
+      const minLat = Number(bounds.getSouth().toFixed(2));
+      const maxLat = Number(bounds.getNorth().toFixed(2));
+      const minLng = Number(bounds.getWest().toFixed(2));
+      const maxLng = Number(bounds.getEast().toFixed(2));
 
-    // Call Flask server to call genProp
-    const coord = {minLat, maxLat, minLng, maxLng};
-   
-    const response = await fetch("/genProp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(coord)
-    });
-    if (response.ok) {
-      console.log("response worked!");
+      const coord = {minLat, maxLat, minLng, maxLng};
+      // Call Flask server to call genProp
+    
+      try {
+        const response = await axios.post('http://localhost:5001/genProp', coord);
+        const responseData = response.data;
+        setResponse(responseData); 
+        console.log(response)
+
+      } catch (error) {
+        console.error('Error:', error);
       
-    }
-      
+      };
   }
 }
 // Implementing API/Logos
@@ -55,7 +54,6 @@ function Demo() {
       </h2>
 
       <h3 style={{ fontSize: 20, marginLeft: '2in'}}>
-        LTL Output: 
       </h3>
 
       <h4 style={{ fontSize: 20, marginLeft: '2in'}}>
