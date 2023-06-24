@@ -4,7 +4,6 @@ import { useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios'
 
-
 // Screen where the demo will be hosted
 function Demo() {
   // Calling OSM API
@@ -12,9 +11,18 @@ function Demo() {
   const ZOOM_LEVEL = 16;
   const mapRef = useRef()
   const url =  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-  // When clicked, this will get the bounds, parse and filter the location selected
-  const [response, setResponse] = useState(''); // State varia
+  
+  // When clicked, this will collect the user inpits, get the bounds, parse and filter the location selected
+  const [response, setResponse] = useState(''); // JSON File
+  let userInputValue; // Declare the variable outside the function
+
   const clickMe =async ()=>{
+
+  // Get use input
+  userInputValue = document.getElementById("textInput").value;
+  // Do something with the userInput value
+  console.log("User input: " + userInputValue);
+
   if (mapRef.current) {
       // Get Bounds
       const map = mapRef.current;
@@ -26,7 +34,6 @@ function Demo() {
 
       const coord = {minLat, maxLat, minLng, maxLng};
       // Call Flask server to call genProp
-    
       try {
         const response = await axios.post('http://localhost:5001/genProp', coord);
         const responseData = response.data;
@@ -39,6 +46,7 @@ function Demo() {
       };
   }
 }
+
 // Implementing API/Logos
   return (
     <div className="backround-color" >
@@ -47,7 +55,7 @@ function Demo() {
       </h1>
      
       <h2 style={{ fontSize: 20, marginLeft: '2in' }}>
-        <input type= "text"></input>
+        <input type= "text" id="textInput"></input>
         <button onClick={clickMe}>
           Convert to LTL
         </button>
