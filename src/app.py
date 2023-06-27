@@ -44,12 +44,12 @@ def genProp():
                         # Check for the 'tag' elements that contain the name information
                             if child.tag == 'tag' and child.attrib.get('k') == 'name':
                                 # make all characters lower case, remove any leading numbers, replace all special characters and space with '_'
-                                name = re.sub("[!@#$%^&*()[]{};:,./<>?\|`~-=+]", "_", (child.attrib.get('v')).lower().lstrip(digits))
+                                name = re.sub(r"[!@#$%^&*()\[\]{};:,.\/<>?\|`~+=\s]", "_", (child.attrib.get('v')).lower().lstrip(digits))
                                 names.setdefault(name, val)
                                 # add designation
                                 for child in element:
                                     if child.tag == 'tag' and child.attrib.get('k') == 'designation':
-                                        names[name] = child.attrib.get('v')
+                                        names[name] = child.attrib.get('v').lower()
 
     # return out all the names 
 

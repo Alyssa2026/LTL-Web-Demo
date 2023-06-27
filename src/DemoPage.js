@@ -27,12 +27,13 @@ function Demo() {
       // Get Bounds
       const map = mapRef.current;
       const bounds = map.getBounds();
-      const minLat = Number(bounds.getSouth().toFixed(2));
-      const maxLat = Number(bounds.getNorth().toFixed(2));
-      const minLng = Number(bounds.getWest().toFixed(2));
-      const maxLng = Number(bounds.getEast().toFixed(2));
+      const minLat = Number(bounds.getSouth());
+      const maxLat = Number(bounds.getNorth());
+      const minLng = Number(bounds.getWest());
+      const maxLng = Number(bounds.getEast());
 
       const coord = {minLat, maxLat, minLng, maxLng};
+      console.log(coord)
       // Call Flask server to call genProp
       try {
         const response = await axios.post('http://localhost:5001/genProp', coord);
@@ -65,7 +66,10 @@ function Demo() {
       </h3>
 
       <h4 style={{ fontSize: 20, marginLeft: '2in'}}>
-        <input type= "text"></input>
+         LTL Output:
+        <h2 style={{ fontSize: 20, marginLeft: '0in' }}>
+        <input type= "text" id="textInput"></input>
+      </h2>
       </h4>
 
       <space>
