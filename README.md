@@ -34,10 +34,44 @@ Start frontend server
 ```bash
   npm start
 ```
-
-
-
-## Demo
+## How to Use Demo
 
 The demo starts off at a homepage. Click the "Go to Demo Page" to get directed to the demo.
+
+\\ insert screen shot 
+
+Enter a natural language command in the first input box and click the "convert to LTL" button.
+
+\\ insert image
+
+
+\\ Add more as project progresses 
+
+
+## Project Outline 
+
+### Client
+Holds all the frontend components of the demo
+
+#### Src
+Hold all the relevant code that constructs the frontend demo
+
+* App.js creates a path from the homepage to demopage
+* DemoPage.js creates the demopage
+    
+    * clickMe takes in user's NL input, gets the OSM coordinates, and sends the coordiantes to the backend server where it is processed by the genProp() method
+    * OSM API is integrated here
+
+* HomePage.js creates homepage
+
+### Server
+Holds all the backend components of the demo 
+
+* app.py has the genProp() method that parses/filters an OSM file based on the coordinates passed in from the frontend input
+
+
+        
+
+    
+
 
