@@ -3,7 +3,6 @@
 
 Welcome! This demo showcases the capabilities of Lang2LTL, a powerful software that translates natural language commands into Linear Temporal Logic (LTL) statements. 
 
-
 ## Run Locally
 
 Clone the project:
