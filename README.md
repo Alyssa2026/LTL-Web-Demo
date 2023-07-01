@@ -37,15 +37,9 @@ Start frontend server
 
 The demo starts off at a homepage. Click the "Go to Demo Page" to get directed to the demo.
 
-\\ insert screen shot 
-
 Enter a natural language command in the first input box and click the "convert to LTL" button.
 
-\\ insert image
-
-
 \\ Add more as project progresses 
-
 
 ## Project Outline 
 
@@ -53,7 +47,7 @@ Enter a natural language command in the first input box and click the "convert t
 Holds all the frontend components of the demo
 
 #### Src
-Hold all the relevant code that constructs the frontend demo
+Holds all the relevant code that constructs the frontend demo
 
 * App.js creates a path from the homepage to demopage
 * DemoPage.js creates the demopage
