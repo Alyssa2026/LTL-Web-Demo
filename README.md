@@ -11,10 +11,13 @@ Clone the project:
   git clone https://github.com/Alyssa2026/LTL-Web-Demo.git
 ```
 
-Start backend server (can also click server/app.py run button)
+Start backend servers 
 
 ```bash
-  python server/app.py
+  python server/genPropServer.py
+```
+```bash
+  python server/LTLServer.py
 ```
 Navigate to frontend demo
 
@@ -60,7 +63,9 @@ Holds all the relevant code that constructs the frontend demo
 ### Server
 Holds all the backend components of the demo 
 
-* app.py has the genProp() method that parses/filters an OSM file based on the coordinates passed in from the frontend input
+* genPropServer.py is the first server. GenProp() method parses/filters an OSM file based on the coordinates passed in from the frontend input
+
+* LTLServer.py is the second server. DisplayLTL() method that takes in the NL command, Go to Slater Hall then Salomon Center for Teaching, and returns the LTL expression back to the frontend, G(Slater Hall->X(Salomon Center for Teaching)). Note: Using constant inputs/outputs for now before we integrate the LTL software
 
 
         

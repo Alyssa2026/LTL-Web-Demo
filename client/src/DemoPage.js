@@ -6,25 +6,23 @@ import axios from 'axios'
 
 // Screen where the demo will be hosted
 function Demo() {
-  // Calling OSM API
+  // Getting the OSM API
   const [center, setCenter] = useState({lat: 41.8268, lng: -71.4025})
   const ZOOM_LEVEL = 16;
   const mapRef = useRef()
   const url =  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
   
-  // When clicked, this will collect the user inpits, get the bounds, parse and filter the location selected
-  const [response, setResponse] = useState(''); // JSON File
+  // When button is clicked, this will collect the user inputs, get the bounds, parse and filter the location selected
+  const [response, setResponse] = useState(''); // Record genProp output 
   let userInputValue; // Declare the variable outside the function
-
+  const [ltlServerResponse, setLTLServerResponse] = useState('');
   const clickMe =async ()=>{
 
-  // Get use input
+  // Get user input
   userInputValue = document.getElementById("textInput").value;
-  // Do something with the userInput value
-  console.log("User input: " + userInputValue);
 
   if (mapRef.current) {
-      // Get Bounds
+      // Get bounds of area displayed on the OSM map
       const map = mapRef.current;
       const bounds = map.getBounds();
       const minLat = Number(bounds.getSouth());
@@ -34,7 +32,7 @@ function Demo() {
 
       const coord = {minLat, maxLat, minLng, maxLng};
       console.log(coord)
-      // Call Flask server to call genProp
+      // Call genProp server to call genProp()
       try {
         const response = await axios.post('http://localhost:5001/genProp', coord);
         const responseData = response.data;
@@ -45,10 +43,19 @@ function Demo() {
         console.error('Error:', error);
       
       };
+      // LTLServer to call displayLTL()
+      try {
+        const response = await axios.post('http://localhost:5002/displayLTL',  { input: userInputValue });
+        const responseData = response.data;
+        setLTLServerResponse(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.error('Error:', error);
+      };
   }
 }
 
-// Implementing API/Logos
+// Implementing OSM API and creating demo page components 
   return (
     <div className="backround-color" >
       <h1 style={{ fontSize: 20, marginLeft: '2in', marginTop: '1in'  }}>
@@ -67,11 +74,10 @@ function Demo() {
 
       <h4 style={{ fontSize: 20, marginLeft: '2in'}}>
          LTL Output:
-        <h2 style={{ fontSize: 20, marginLeft: '0in' }}>
-        <input type= "text" id="textInput"></input>
-      </h2>
       </h4>
-
+      <h2 style={{ fontSize: 20, marginLeft: '2in' }}>
+        {ltlServerResponse}
+      </h2>
       <space>
       </space>
     

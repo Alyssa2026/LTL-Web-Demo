@@ -5,6 +5,7 @@ import DemoPage from './DemoPage';
 
 const App = () => {
   return (
+    // Creates a path from HomePage to DemoPage when link in HomePage is clicked
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
