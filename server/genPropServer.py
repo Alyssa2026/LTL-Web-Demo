@@ -13,7 +13,7 @@ CORS(app)
 @app.route("/")
 @app.route("/genProp", methods = ['POST'] )
 def genProp():
-    # Get the URL from the request JSON
+    # Get the coord to form the URL to make JSON file
     data = request.get_json()
     minLat = data['minLat']
     maxLat = data['maxLat']

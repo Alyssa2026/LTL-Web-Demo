@@ -63,9 +63,9 @@ Holds all the relevant code that constructs the frontend demo
 ### Server
 Holds all the backend components of the demo 
 
-* genPropServer.py is the first server. GenProp() method parses/filters an OSM file based on the coordinates passed in from the frontend input
+* genPropServer.py is the first server. genProp() method parses/filters an OSM file based on the coordinates passed in from the frontend input
 
-* LTLServer.py is the second server. DisplayLTL() method that takes in the NL command, Go to Slater Hall then Salomon Center for Teaching, and returns the LTL expression back to the frontend, G(Slater Hall->X(Salomon Center for Teaching)). Note: Using constant inputs/outputs for now before we integrate the LTL software
+* LTLServer.py is the second server. convertLTL() method that takes in the JSON file with the propositions, and the NL command, "Go to Slater Hall then Salomon Center for Teaching," and returns the LTL expression back to the frontend, "G(Slater Hall->X(Salomon Center for Teaching))". Note: Using constant inputs/outputs for now before we integrate the LTL software
 
 
         

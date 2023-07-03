@@ -32,25 +32,25 @@ function Demo() {
 
       const coord = {minLat, maxLat, minLng, maxLng};
       console.log(coord)
-      // Call genProp server to call genProp()
+      // Call servers required when button is clicked
       try {
+         // Call genProp server to call genProp()
         const response = await axios.post('http://localhost:5001/genProp', coord);
         const responseData = response.data;
         setResponse(responseData); 
         console.log(response)
 
+         // Use the JSON file obtained in the first API call
+        const jsonFile = responseData.jsonFile;
+
+        // LTLServer to call convertLTL(), passes in user input and JSON file of Propositions
+        const response2 = await axios.post('http://localhost:5002/convertLTL',  { input: userInputValue, file: jsonFile});
+        const responseData2 = response2.data;
+        setLTLServerResponse(responseData2.user_input);
+        console.log(responseData2);
       } catch (error) {
         console.error('Error:', error);
       
-      };
-      // LTLServer to call displayLTL()
-      try {
-        const response = await axios.post('http://localhost:5002/displayLTL',  { input: userInputValue });
-        const responseData = response.data;
-        setLTLServerResponse(responseData);
-        console.log(responseData);
-      } catch (error) {
-        console.error('Error:', error);
       };
   }
 }
