@@ -13,9 +13,9 @@ CORS(app)
 @app.route("/convertLTL", methods = ['POST'] )
 def convertLTL():
    # Get the user input and proposition JSON File
-   data = request.get_json()
-   user_input = data.get('input')
-   file = data.get('file')
+   # data = request.get_json()
+   # user_input = data.get('input')
+   # file = data.get('file')
    # Read the first line of the JSON file
    #first_line = file.readline().decode('utf-8')
     

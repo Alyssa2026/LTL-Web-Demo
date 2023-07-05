@@ -46,7 +46,7 @@ function Demo() {
         // LTLServer to call convertLTL(), passes in user input and JSON file of Propositions
         const response2 = await axios.post('http://localhost:5002/convertLTL',  { input: userInputValue, file: jsonFile});
         const responseData2 = response2.data;
-        setLTLServerResponse(responseData2.user_input);
+        setLTLServerResponse(responseData2);
         console.log(responseData2);
       } catch (error) {
         console.error('Error:', error);
