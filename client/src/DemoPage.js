@@ -38,11 +38,10 @@ function Demo() {
         const response = await axios.post('http://localhost:5001/genProp', coord);
         const responseData = response.data;
         setResponse(responseData); 
-        console.log(response)
 
          // Use the JSON file obtained in the first API call
-        const jsonFile = responseData.jsonFile;
-
+        const jsonFile = JSON.stringify(responseData);
+        console.log(responseData)
         // LTLServer to call convertLTL(), passes in user input and JSON file of Propositions
         const response2 = await axios.post('http://localhost:5002/convertLTL',  { input: userInputValue, file: jsonFile});
         const responseData2 = response2.data;
