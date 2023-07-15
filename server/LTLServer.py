@@ -23,9 +23,9 @@ def convertLTL():
 
 
    # return the user input 
-   return jsonify(user_input)
+   # return jsonify(user_input)
    # return the file 
-   return jsonify(file)
+   # return jsonify(file)
    return 'G(Slater Hall -> X(Salomon Center For Teaching))'
    
    

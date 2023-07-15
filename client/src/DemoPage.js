@@ -1,6 +1,6 @@
 import './DemoPage.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { useRef, useState} from 'react';
+import { useEffect, useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios'
 
@@ -14,13 +14,24 @@ function Demo() {
   
   // When button is clicked, this will collect the user inputs, get the bounds, parse and filter the location selected
   const [response, setResponse] = useState(''); // Record genProp output 
-  let userInputValue; // Declare the variable outside the function
+  const [userInputValue, setUserInputValue] = useState(''); // set up constant for user input
   const [ltlServerResponse, setLTLServerResponse] = useState('');
+
+  // usereffect to update local storage
+  useEffect(() => {
+    const storedOut = JSON.parse(localStorage.getItem('server output')) || [];
+    storedOut.push(ltlServerResponse);
+    localStorage.setItem('server output', JSON.stringify(storedOut));
+
+    const storedIn = JSON.parse(localStorage.getItem('user input')) || [];
+    storedIn.push(userInputValue);
+    localStorage.setItem('user input', JSON.stringify(storedIn));
+  }, [userInputValue, ltlServerResponse]);
+  
   const clickMe =async ()=>{
-
   // Get user input
-  userInputValue = document.getElementById("textInput").value;
-
+  const input = document.getElementById("textInput").value;
+  setUserInputValue(input);
   if (mapRef.current) {
       // Get bounds of area displayed on the OSM map
       const map = mapRef.current;
