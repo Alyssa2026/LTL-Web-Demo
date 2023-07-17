@@ -57,6 +57,7 @@ Holds all the relevant code that constructs the frontend demo
     
     * clickMe takes in user's NL input, gets the OSM coordinates, and sends the coordiantes to the backend server where it is processed by the genProp() method
     * OSM API is integrated here
+    * Local storage is called here to locally store user inputs and the statement converted into a logical statement 
 
 * HomePage.js creates homepage
 
