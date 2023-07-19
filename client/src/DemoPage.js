@@ -1,5 +1,5 @@
 import './DemoPage.css';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer , Marker} from 'react-leaflet';
 import { useEffect, useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios'
@@ -95,6 +95,8 @@ function Demo() {
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
+            <Marker position={[41.826409, -71.402863]} />
+            <Marker position={[41.8258, -71.40427]} />
         </MapContainer>
       </div>
    </div>  
