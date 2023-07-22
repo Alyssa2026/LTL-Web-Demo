@@ -1,5 +1,5 @@
 import './DemoPage.css';
-import { MapContainer, TileLayer , Marker} from 'react-leaflet';
+import { MapContainer, TileLayer , Marker, Polyline} from 'react-leaflet';
 import  L from 'leaflet';
 import { useEffect, useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
@@ -75,6 +75,12 @@ const customIcon = L.icon({
   iconSize: [32, 32], // Adjust the size of the icon as needed
   iconAnchor: [16, 32],
 });
+// create line
+var line=[
+  [41.82648, -71.4026],
+  [41.82576, -71.40383]];
+
+
 
 // Implementing OSM API and creating demo page components 
   return (
@@ -106,6 +112,7 @@ const customIcon = L.icon({
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
+            {buttonClicked && <Polyline positions={line} color="black" />}
             {buttonClicked && <Marker position={[41.82648, -71.4026]}  icon={customIcon}/>}
             {buttonClicked && <Marker position={[41.82576, -71.40383]}  icon={customIcon}/>}
         </MapContainer>
