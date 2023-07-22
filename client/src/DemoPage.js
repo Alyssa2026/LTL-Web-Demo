@@ -1,8 +1,10 @@
 import './DemoPage.css';
 import { MapContainer, TileLayer , Marker} from 'react-leaflet';
+import  L from 'leaflet';
 import { useEffect, useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios'
+import marker from'./img/marker.png' ;
 
 // Screen where the demo will be hosted
 function Demo() {
@@ -16,6 +18,7 @@ function Demo() {
   const [response, setResponse] = useState(''); // Record genProp output 
   const [userInputValue, setUserInputValue] = useState(''); // set up constant for user input
   const [ltlServerResponse, setLTLServerResponse] = useState('');
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   // usereffect to update local storage
   useEffect(() => {
@@ -62,8 +65,16 @@ function Demo() {
         console.error('Error:', error);
       
       };
+      setButtonClicked(true)
   }
 }
+
+// Creating custom marker for Map
+const customIcon = L.icon({
+  iconUrl: marker,
+  iconSize: [32, 32], // Adjust the size of the icon as needed
+  iconAnchor: [16, 32],
+});
 
 // Implementing OSM API and creating demo page components 
   return (
@@ -95,8 +106,8 @@ function Demo() {
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
-            <Marker position={[41.826409, -71.402863]} />
-            <Marker position={[41.8258, -71.40427]} />
+            {buttonClicked && <Marker position={[41.82648, -71.4026]}  icon={customIcon}/>}
+            {buttonClicked && <Marker position={[41.82576, -71.40383]}  icon={customIcon}/>}
         </MapContainer>
       </div>
    </div>  
