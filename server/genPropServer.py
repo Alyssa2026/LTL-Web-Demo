@@ -39,6 +39,7 @@ def genProp():
                 if child.tag == 'tag':
                     if child.attrib.get('k') == 'building' or child.attrib.get('k') == 'amenity' or child.attrib.get('k') == 'shop':
                         val = child.attrib.get('v')
+                        mapToDic = {}
                         for child in element:
                         # Check for the 'tag' elements that contain the name information
                             if child.tag == 'tag' and child.attrib.get('k') == 'name':
@@ -46,9 +47,10 @@ def genProp():
                                 name = re.sub(r"[!@#$%^&*()\[\]{};:,.\/<>?\|`~+=\s]", "_", (child.attrib.get('v')).lower().lstrip(digits))
                                 names.setdefault(name, val)
                                 # add designation
-                                for child in element:
-                                    if child.tag == 'tag' and child.attrib.get('k') == 'designation':
-                                        names[name] = child.attrib.get('v').lower()
+                            elif child.tag == 'tag':
+                                        mapToDic[child.attrib.get('k').lower()]=child.attrib.get('v').lower()
+                        names[name] = mapToDic
+                            
 
     # return out all the names 
 
