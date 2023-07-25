@@ -29,11 +29,17 @@ def genProp():
     root = ET.fromstring(osm_content)
     # Define a dictionary to store the extracted names (set to avoid repeats)
     names = {}
+    node_coordinates = {}
 
     # Iterate over the elements in the OSM file
     for element in root.iter():
+        if element.tag == 'node':
+                node_id = element.attrib.get('id')
+                node_lat = float(element.attrib.get('lat'))
+                node_lon = float(element.attrib.get('lon'))
+                node_coordinates[node_id] = (node_lat, node_lon)
+        elif element.tag == 'way':
         # Check if the element represents a building or business 
-        if element.tag == 'way' or element == 'node':
             for child in element:
                 # Extract the name tag value if building exists
                 if child.tag == 'tag':
@@ -46,10 +52,30 @@ def genProp():
                                 # make all characters lower case, remove any leading numbers, replace all special characters and space with '_'
                                 name = re.sub(r"[!@#$%^&*()\[\]{};:,.\/<>?\|`~+=\s]", "_", (child.attrib.get('v')).lower().lstrip(digits))
                                 names.setdefault(name, val)
-                                # add designation
+                                # add semantic info
                             elif child.tag == 'tag':
                                         mapToDic[child.attrib.get('k').lower()]=child.attrib.get('v').lower()
-                        names[name] = mapToDic
+                        # add name and coordinates
+                        if name and mapToDic:
+                            coords = []
+                            for nd in element.iter("nd"):
+                                ref = nd.attrib.get('ref')
+                                if ref in node_coordinates:
+                                    lat, lon = node_coordinates[ref]
+                                    coords.append((lat, lon))
+                                                            
+
+                            # Calculate the center coordinate of the way
+                            center_lat = sum(lat for lat, lon in coords) / len(coords)
+                            center_lon = sum(lon for lat, lon in coords) / len(coords)
+
+                            # Add the center coordinate to the mapToDic dictionary
+                            mapToDic['latitude'] = center_lat
+                            mapToDic['longitude']=center_lon
+                            names[name] = mapToDic
+                           
+                            
+
                             
 
     # return out all the names 
