@@ -4,7 +4,9 @@ import  L from 'leaflet';
 import { useEffect, useRef, useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios'
-import marker from'./img/marker.png' ;
+import end from'./img/end.png' ;
+import middle from './img/middle.png' ;
+import start from './img/start.png' ;
 
 // Screen where the demo will be hosted
 function Demo() {
@@ -19,6 +21,8 @@ function Demo() {
   const [userInputValue, setUserInputValue] = useState(''); // set up constant for user input
   const [ltlServerResponse, setLTLServerResponse] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [LTLPlannerServerResponse, setLTLPlannerServerResponse] = useState('');
+  const [coordList, setCoordList] = useState([]);
 
   // usereffect to update local storage
   useEffect(() => {
@@ -61,6 +65,14 @@ function Demo() {
         const responseData2 = response2.data;
         setLTLServerResponse(responseData2);
         console.log(responseData2);
+        // LTLPlannerServer called to get route sequence 
+        const response3 = await axios.post('http://localhost:5003/routeSeq',  {LTLStatement: responseData2, file: jsonFile, minLat: 
+        minLat, maxLat: maxLat, minLng:minLng, maxLng: maxLng});
+        const responseData3 = response3.data;
+        setLTLPlannerServerResponse(responseData3);
+        setCoordList(responseData3);
+        console.log(responseData3);
+
       } catch (error) {
         console.error('Error:', error);
       
@@ -70,16 +82,25 @@ function Demo() {
 }
 
 // Creating custom marker for Map
-const customIcon = L.icon({
-  iconUrl: marker,
+const startMark = L.icon({
+  iconUrl: start,
   iconSize: [32, 32], // Adjust the size of the icon as needed
   iconAnchor: [16, 32],
 });
-// create line
-var line=[
-  [41.82648, -71.4026],
-  [41.82576, -71.40383]];
 
+const endMark =
+L.icon({
+  iconUrl: end,
+  iconSize: [32, 32], // Adjust the size of the icon as needed
+  iconAnchor: [16, 32],
+});
+
+const middleMark =
+L.icon({
+  iconUrl: middle,
+  iconSize: [32, 32], // Adjust the size of the icon as needed
+  iconAnchor: [16, 32],
+});
 
 
 // Implementing OSM API and creating demo page components 
@@ -112,9 +133,18 @@ var line=[
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
-            {buttonClicked && <Polyline positions={line} color="black" />}
-            {buttonClicked && <Marker position={[41.82648, -71.4026]}  icon={customIcon}/>}
-            {buttonClicked && <Marker position={[41.82576, -71.40383]}  icon={customIcon}/>}
+            <Marker position={coordList[0]} icon={startMark} />
+            <Marker position={coordList[coordList.length - 1]} icon={endMark} />
+            {coordList.map((coord, index) => (
+              index !==0 && index !== coordList.length - 1 ? (
+                // If index is 1, render the Marker component with endMarker
+                <Marker key={index} position={coord} icon={middleMark} />
+              ) :(
+                 null
+              )
+            ))}
+            {coordList.length > 0 && <Polyline positions={coordList} color="black" />}
+           
         </MapContainer>
       </div>
    </div>  
