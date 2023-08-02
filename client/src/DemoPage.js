@@ -23,6 +23,7 @@ function Demo() {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [LTLPlannerServerResponse, setLTLPlannerServerResponse] = useState('');
   const [coordList, setCoordList] = useState([]);
+  const [showMarkers, setShowMarkers] = useState(false);
 
   // usereffect to update local storage
   useEffect(() => {
@@ -72,6 +73,7 @@ function Demo() {
         setLTLPlannerServerResponse(responseData3);
         setCoordList(responseData3);
         console.log(responseData3);
+        setShowMarkers(true);
 
       } catch (error) {
         console.error('Error:', error);
@@ -133,18 +135,21 @@ L.icon({
         <MapContainer center = {center} zoom= {ZOOM_LEVEL} ref = {mapRef}>
             <TileLayer 
             url = {url} />
-            <Marker position={coordList[0]} icon={startMark} />
-            <Marker position={coordList[coordList.length - 1]} icon={endMark} />
-            {coordList.map((coord, index) => (
-              index !==0 && index !== coordList.length - 1 ? (
-                // If index is 1, render the Marker component with endMarker
-                <Marker key={index} position={coord} icon={middleMark} />
-              ) :(
-                 null
-              )
-            ))}
-            {coordList.length > 0 && <Polyline positions={coordList} color="black" />}
-           
+           {showMarkers && coordList.length > 0 && (
+            <>
+              <Marker position={coordList[0]} icon={startMark} />
+              <Marker
+                position={coordList[coordList.length - 1]}
+                icon={endMark}
+              />
+              {coordList.map((coord, index) =>
+                index !== 0 && index !== coordList.length - 1 ? (
+                  <Marker key={index} position={coord} icon={middleMark} />
+                ) : null
+              )}
+              <Polyline positions={coordList} color="black" />
+            </>
+          )}
         </MapContainer>
       </div>
    </div>  
