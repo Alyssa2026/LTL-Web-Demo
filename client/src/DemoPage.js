@@ -76,6 +76,9 @@ function Demo() {
         setShowMarkers(true);
 
       } catch (error) {
+        if (error.config.url === 'http://localhost:5002/convertLTL') {
+          console.log("Error from convertLTL:", error.response.data.error); // Log the error message
+        }
         console.error('Error:', error);
       
       };
