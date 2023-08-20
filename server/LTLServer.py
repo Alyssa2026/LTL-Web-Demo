@@ -3,7 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 import xml.etree.ElementTree as ET
 from string import digits
 from flask_cors import CORS, cross_origin
-from lang2ltl import lang2ltl
+import lang2ltl
+import json
+
+
+
 
 
 app = Flask(__name__)
@@ -19,11 +23,18 @@ def convertLTL():
    # Read the first line of the JSON file
    # first_line = ''
    # with open(file, 'r') as json_file:
-   #first_line = json_file.readline()impo
-  
-
+   #first_line = json_file.readline()
    try:
-        result =lang2ltl(user_input, file, 3) # random last input until keepKeys is figured out
+        keep_keys = [
+        "amenity", "shop", "addr:street",
+        "short_name", "building", "building:part" "leisure", "tourism", "historic",
+        "healthcare", "area", "landuse", "waterway", "aeroway", "highway", "office", "operator", "brand", "branch",
+        "cuisine", "beauty", "official_name", "alt_name", "station", "railway", "subway", "latitude", "longitude"
+     ] 
+        # convert json into dict
+        dict = json.loads(file)
+        
+        result =lang2ltl.lang2ltl(user_input, dict, keep_keys) # random last input until keepKeys is figured out
         return jsonify(result)
    except Exception as e:
         error_message = "An error occurred while processing the request."
