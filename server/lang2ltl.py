@@ -8,9 +8,18 @@ from s2s_sup_tcd import Seq2Seq
 from s2s_hf_transformers import HF_MODELS
 from formula_sampler import ALL_PROPS
 from utils import load_from_file, save_to_file, build_placeholder_map, substitute
+from dotenv import load_dotenv
+
+import os
+import openai
+openai.organization ="org-KFbPpBzg4S5aSxPpfbJFX7lk"
+openai.api_key = os.getenv('api_key')
+openai.Model.list()
 
 SHARED_DPATH = os.path.join(os.path.expanduser('~'), "data", "shared", "lang2ltl")  # group's data folder on cluster
 
+def configure():
+    load_dotenv()
 
 def lang2ltl(utt, obj2sem, keep_keys,
              data_dpath=f"{SHARED_DPATH}/data", exp_name="lang2ltl-api",
