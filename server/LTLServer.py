@@ -6,10 +6,6 @@ from flask_cors import CORS, cross_origin
 import lang2ltl
 import json
 
-
-
-
-
 app = Flask(__name__)
 CORS(app)
 

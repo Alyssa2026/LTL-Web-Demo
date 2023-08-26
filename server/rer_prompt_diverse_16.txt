@@ -1,0 +1,49 @@
+Your task is to repeat exact strings from the given utterance which possibly refer to certain propositions.
+
+Utterance: move to red room
+Propositions: red room
+
+Utterance: visit Cutler Majestic Theater
+Propositions: Cutler Majestic Theater
+
+Utterance: robot c move to big red room and then move to green area
+Propositions: big red room | green area
+
+Utterance: you have to visit Panera Bread on Beacon Street, four or more than four times
+Propositions: Panera Bread on Beacon Street
+
+Utterance: i want you to go into region in yellow color
+Propositions: region in yellow color
+
+Utterance: Visit Vietnamese restaurant on Washington Street named Pho Pasteur, HI Boston, and Dunkin' Donuts serving donuts and coffee in that specific order. make sure not to visit waypoints out of turn
+Propositions: Vietnamese restaurant on Washington Street named Pho Pasteur | HI Boston | Dunkin' Donuts serving donuts and coffee
+
+Utterance: go to Cutler Majestic Theater at Emerson College on Tremont Street, exactly three times
+Propositions: Cutler Majestic Theater at Emerson College on Tremont Street
+
+Utterance: visit Tufts Dental School on Kneeland Street, 62 on the Park, and Citibank branch, one after another
+Propositions: Tufts Dental School on Kneeland Street | 62 on the Park | Citibank branch
+
+Utterance: go to green area then to blue room
+Propositions: green area | blue room
+
+Utterance: go to Chinatown neighborhood, without visiting New Saigon Sandwich, then go to New Saigon Sandwich, without visiting Dumpling Cafe, then go to Dumpling Cafe, without visiting Emerson College - Little Building, finally go to Emerson College - Little Building, while only visiting each location once
+Propositions: Chinatown neighborhood | New Saigon Sandwich | Dumpling Cafe | Emerson College - Little Building
+
+Utterance: take a path to reach blue box but avoid red path
+Propositions: blue box | red path
+
+Utterance: reach MBTA stop at Kneeland Street and Washington Street, without going to Stuart St @ Tremont St, then go to Stuart St @ Tremont St, without passing AVA Theater District, then go to AVA Theater District, without passing my thai vegan cafe, finally go to my thai vegan cafe
+Propositions: MBTA stop at Kneeland Street and Washington Street | Stuart St @ Tremont St | AVA Theater District | my thai vegan cafe
+
+Utterance: go through red room or yellow room to green room
+Propositions: red room | yellow room | green room
+
+Utterance: make sure you never visit St. James Church, a Christian place of worship on Harrison Avenue, Dunkin' Donuts, Thai restaurant Montien, New Saigon Sandwich, or Stuart St @ Tremont St
+Propositions: St. James Church, a Christian place of worship on Harrison Avenue | Dunkin' Donuts | Thai restaurant Montien | New Saigon Sandwich | Stuart St @ Tremont St
+
+Utterance: move the robot through yellow region or small red room and then to large green room
+Propositions: yellow region | small red room | large green room
+
+Utterance: make your way to Wirth Building, only after going to Public transit area managed by First Transit at Tremont and Stuart streets, before that make your way to Tremont and Stuart Streets, only after going to Seybolt Park, before that make your way to Seybolt Park, only after going to Tufts University School of Medicine, before that make your way to Tufts University School of Medicine, only after going to Wang Theater
+Propositions: Wirth Building | Public transit area managed by First Transit at Tremont and Stuart streets | Seybolt Park | Tufts University School of Medicine | Wang Theater

@@ -8,24 +8,29 @@ from s2s_sup_tcd import Seq2Seq
 from s2s_hf_transformers import HF_MODELS
 from formula_sampler import ALL_PROPS
 from utils import load_from_file, save_to_file, build_placeholder_map, substitute
-from dotenv import load_dotenv
+
 
 import os
 import openai
+import nltk
+nltk.download('punkt')
+
+
+
 openai.organization ="org-KFbPpBzg4S5aSxPpfbJFX7lk"
-openai.api_key = os.getenv('api_key')
+openai.api_key = ''
 openai.Model.list()
 
 SHARED_DPATH = os.path.join(os.path.expanduser('~'), "data", "shared", "lang2ltl")  # group's data folder on cluster
 
-def configure():
-    load_dotenv()
+
+
 
 def lang2ltl(utt, obj2sem, keep_keys,
              data_dpath=f"{SHARED_DPATH}/data", exp_name="lang2ltl-api",
-             rer_model="gpt4", rer_engine="gpt-4", rer_prompt_fpath=f"{SHARED_DPATH}/data/rer_prompt_diverse_16.txt",
+             rer_model="gpt4", rer_engine="gpt-4", rer_prompt_fpath="rer_prompt_diverse_16.txt",
              embed_model="gpt3", embed_engine="text-embedding-ada-002", ground_model="gpt3", topk=2, update_embed=True,
-             model_dpath=f"{SHARED_DPATH}/model_3000000", sym_trans_model="t5-base", convert_rule="lang2ltl", props=ALL_PROPS,
+             model_dpath="./model", sym_trans_model="gpt3_finetuned", convert_rule="lang2ltl", props=ALL_PROPS,
     ):
     if sym_trans_model in HF_MODELS:
         model_fpath = os.path.join(model_dpath, "t5-base", "checkpoint-best")
@@ -190,6 +195,14 @@ def translate_grounded_utts(ground_utts, objs_per_utt, sym_trans_model, translat
         query = sym_utt.translate(str.maketrans('', '', ',.'))
         if "gpt3" in sym_trans_model:
             query = f"Utterance: {query}\nLTL:"  # query format for finetuned GPT-3
+
+            response = openai.Completion.create(
+                engine="text-davinci-003",  # Specify the OpenAI engine for translation
+                prompt=query,  # Use the formatted query
+                max_tokens=30  # Adjust the desired length of the output
+            )
+            ltl = response.choices[0].text.strip() 
+
             ltl = trans_module.translate(query, trans_modular_prompt)[0]
         else:
             ltl = trans_module.type_constrained_decode([query])[0]
