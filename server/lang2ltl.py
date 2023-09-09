@@ -18,7 +18,7 @@ import pickle
 import os
 
 openai.organization ="org-KFbPpBzg4S5aSxPpfbJFX7lk"
-openai.api_key = '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'
+openai.api_key = ''
 openai.Model.list()
 
 SHARED_DPATH = os.path.join(os.path.expanduser('~'), "data", "shared", "lang2ltl")  # group's data folder on cluster
