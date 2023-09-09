@@ -29,8 +29,7 @@ def convertLTL():
      ] 
         # convert json into dict
         dict = json.loads(file)
-        
-        result =lang2ltl.lang2ltl(user_input, dict, keep_keys) # random last input until keepKeys is figured out
+        result =lang2ltl.lang2ltl(user_input, dict, keep_keys) 
         return jsonify(result)
    except Exception as e:
         error_message = "An error occurred while processing the request."
@@ -44,8 +43,8 @@ def convertLTL():
    # return the file 
    # return jsonify(file)
 
-   return jsonify('G(Slater Hall -> X(Salomon Center For Teaching))')
+
    
    
 if __name__ == '__main__':
-    app.run(debug= True, port = 5002)
+    app.run(debug= True, port = 5004)

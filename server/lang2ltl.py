@@ -9,26 +9,24 @@ from s2s_hf_transformers import HF_MODELS
 from formula_sampler import ALL_PROPS
 from utils import load_from_file, save_to_file, build_placeholder_map, substitute
 
-
-import os
 import openai
 import nltk
 nltk.download('punkt')
 
+import pickle
 
+import os
 
 openai.organization ="org-KFbPpBzg4S5aSxPpfbJFX7lk"
-openai.api_key = ''
+openai.api_key = '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'
 openai.Model.list()
 
 SHARED_DPATH = os.path.join(os.path.expanduser('~'), "data", "shared", "lang2ltl")  # group's data folder on cluster
 
-
-
-
+#model is fpt3 finetuned not t-5
 def lang2ltl(utt, obj2sem, keep_keys,
              data_dpath=f"{SHARED_DPATH}/data", exp_name="lang2ltl-api",
-             rer_model="gpt4", rer_engine="gpt-4", rer_prompt_fpath="rer_prompt_diverse_16.txt",
+             rer_model="gpt4", rer_engine="gpt-4", rer_prompt_fpath="/Users/lianli/Downloads/Robotics /LTL-Web-Demo/server/rer_prompt_diverse_16.txt",
              embed_model="gpt3", embed_engine="text-embedding-ada-002", ground_model="gpt3", topk=2, update_embed=True,
              model_dpath="./model", sym_trans_model="gpt3_finetuned", convert_rule="lang2ltl", props=ALL_PROPS,
     ):
@@ -36,11 +34,15 @@ def lang2ltl(utt, obj2sem, keep_keys,
         model_fpath = os.path.join(model_dpath, "t5-base", "checkpoint-best")
         translation_engine = model_fpath
     elif sym_trans_model == "gpt3_finetuned":
+        
         translation_engine = f"gpt3_finetuned_symbolic_batch12_perm_utt_0.2_42"
-        translation_engine = load_from_file(os.path.join(model_dpath, "gpt3_models.pkl"))[translation_engine]
+        #translation_engine = os.path.expanduser("/Users/lianli/Downloads/Robotics /LTL-Web-Demo/server/model/gpt3_models.pkl")[translation_engine]
+        
+        with open("/Users/lianli/Downloads/Robotics /LTL-Web-Demo/server/model/gpt3_models.pkl", "rb") as f:
+            translation_engine = pickle.load(f)[translation_engine]
+   
     else:
         raise ValueError(f"ERROR: unrecognized symbolic translation model: {sym_trans_model}")
-
     logging.info(f"RER engine: {rer_engine}")
     logging.info(f"Embedding engine: {embed_model} {embed_engine}")
     logging.info(f"Symbolic translation engine: {translation_engine}\n")
