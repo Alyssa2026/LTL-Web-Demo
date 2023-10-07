@@ -35,12 +35,14 @@ function Demo() {
     storedIn.push(userInputValue);
     localStorage.setItem('user input', JSON.stringify(storedIn));
   }, [userInputValue, ltlServerResponse]);
-  
+
   const clickMe =async ()=>{
-  // Get user input
-  const input = document.getElementById("textInput").value;
-  setUserInputValue(input);
   if (mapRef.current) {
+      // Get user input
+      const input = document.getElementById("textInput").value;
+
+      // Move setUserInputValue here
+      setUserInputValue(input);
       // Get bounds of area displayed on the OSM map
       const map = mapRef.current;
       const bounds = map.getBounds();
@@ -54,7 +56,7 @@ function Demo() {
       // Call servers required when button is clicked
       try {
          // Call genProp server to call genProp()
-        const response = await axios.post('http://localhost:5001/genProp', coord);
+        const response = await axios.post('http://localhost:5002/genProp', coord);
         const responseData = response.data;
         setResponse(responseData); 
 
@@ -116,7 +118,12 @@ L.icon({
       </h1>
      
       <h2 style={{ fontSize: 20, marginLeft: '2in' }}>
-        <input type= "text" id="textInput"></input>
+          <input
+            type="text"
+            id="textInput"
+            value={userInputValue}
+            onChange={(e) => setUserInputValue(e.target.value)}
+          />
         <button onClick={clickMe}>
           Convert to LTL
         </button>

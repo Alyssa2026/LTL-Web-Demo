@@ -37,14 +37,6 @@ def convertLTL():
         return jsonify({"error": str(e)}), 500  # Return an appropriate error response
 
    
-
-   # return the user input 
-   # return jsonify(user_input)
-   # return the file 
-   # return jsonify(file)
-
-
-   
    
 if __name__ == '__main__':
     app.run(debug= True, port = 5004)
