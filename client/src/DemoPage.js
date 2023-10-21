@@ -153,11 +153,12 @@ L.icon({
                 icon={endMark}
               />
               {coordList.map((coord, index) =>
-                index !== 0 && index !== coordList.length - 1 ? (
-                  <Marker key={index} position={coord} icon={middleMark} />
-                ) : null
+               index !== 0 && index !== coordList.length - 2 ? (
+                 <Marker key={index} position={coord} icon={middleMark} />
+               ) : null
               )}
-              <Polyline positions={coordList} color="black" />
+             <Polyline positions={coordList} color="black" />
+
             </>
           )}
         </MapContainer>

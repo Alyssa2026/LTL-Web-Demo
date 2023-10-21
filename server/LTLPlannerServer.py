@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import xml.etree.ElementTree as ET
@@ -22,7 +23,23 @@ def routeSeq():
     LTLStatement = data['LTLStatement']
     # JSON file
     file = data['file']
-    
+    dict = json.loads(file)
+
+   # create environment
+
+   # map number to location
+    numToLoc= {}
+    i = 0
+    allLoc =[]
+    env = {}
+    for key in dict:
+        numToLoc[i]=key
+        allLoc.append(i)
+        i+=1
+        
+    for i in range(len(dict)):
+        env[i]=allLoc
+    out = [numToLoc, allLoc]
     coordList = []
     # create 5 random coordiates:
     for i in range(5):
