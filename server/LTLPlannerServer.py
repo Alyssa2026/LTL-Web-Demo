@@ -5,6 +5,9 @@ import xml.etree.ElementTree as ET
 from string import digits
 from flask_cors import CORS, cross_origin
 import random
+from collections import defaultdict
+from magic.language.planner.scripts.simple_rl.simple_rl.apmdp.settings import build_graph_env
+
 
 app = Flask(__name__)
 CORS(app)
@@ -25,22 +28,11 @@ def routeSeq():
     file = data['file']
     dict = json.loads(file)
 
-   # create environment
+    # create environment
+    cube_env, name_to_loc = build_graph_env(dict)
 
-   # map number to location
-    numToLoc= {}
-    i = 0
-    allLoc =[]
-    env = {}
-    for key in dict:
-        numToLoc[i]=key
-        allLoc.append(i)
-        i+=1
-        
-    for i in range(len(dict)):
-        env[i]=allLoc
-    out = [numToLoc, allLoc]
     coordList = []
+    return name_to_loc
     # create 5 random coordiates:
     for i in range(5):
         coord = [random.uniform(minLat+0.0004, maxLat-0.0004), random.uniform(minLng+0.0004, maxLng-0.0004)]
@@ -50,4 +42,4 @@ def routeSeq():
    
    
 if __name__ == '__main__':
-    app.run(debug= True, port = 5003)
+    app.run(debug= True, port = 5007)
