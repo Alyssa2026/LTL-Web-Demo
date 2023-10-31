@@ -6,7 +6,8 @@ from string import digits
 from flask_cors import CORS, cross_origin
 import random
 from collections import defaultdict
-from magic.language.planner.scripts.simple_rl.simple_rl.apmdp.settings import build_graph_env
+import build_graph_env
+#from magic.language.planner.scripts.simple_rl.simple_rl.apmdp.settings import build_graph_env
 
 
 app = Flask(__name__)
@@ -27,12 +28,11 @@ def routeSeq():
     # JSON file
     file = data['file']
     dict = json.loads(file)
-
     # create environment
-    cube_env, name_to_loc = build_graph_env(dict)
+    cube_env = build_graph_env.build_graph_env(dict)
 
     coordList = []
-    return name_to_loc
+    return jsonify(cube_env)
     # create 5 random coordiates:
     for i in range(5):
         coord = [random.uniform(minLat+0.0004, maxLat-0.0004), random.uniform(minLng+0.0004, maxLng-0.0004)]
@@ -42,4 +42,4 @@ def routeSeq():
    
    
 if __name__ == '__main__':
-    app.run(debug= True, port = 5007)
+    app.run(debug= True, port = 5008)

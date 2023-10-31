@@ -69,7 +69,7 @@ function Demo() {
         setLTLServerResponse(responseData2);
         console.log(responseData2);
         // LTLPlannerServer called to get route sequence 
-        const response3 = await axios.post('http://localhost:5007/routeSeq',  {LTLStatement: responseData2, file: jsonFile, minLat: 
+        const response3 = await axios.post('http://localhost:5008/routeSeq',  {LTLStatement: responseData2, file: jsonFile, minLat: 
         minLat, maxLat: maxLat, minLng:minLng, maxLng: maxLng});
         const responseData3 = response3.data;
         setLTLPlannerServerResponse(responseData3);
